@@ -47,9 +47,11 @@ OPTIONS:
 
 ```bash
 ncd -c zlib -d dirtest1/
-ncd -c ppmd -s dirtest2/
-ncd -c bzlib file1 file2/
+ncd -c ppmd -s -d dirtest2/
+ncd -c bzlib file1 file2
 ncd -c ppmd -t 8 -d largedir/
+ncd -c ppmd -t 8 -o matrix.txt -d dirtest2/
+ncd -c ppmd -t 8 -o - -d dirtest2/
 ```
 Note that if you are leading with small directory and/or files, there is no
 special reason to use this utility, you can keep using *ncd* from *libcomplearn*.
