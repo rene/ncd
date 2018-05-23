@@ -62,7 +62,7 @@ void *thread_calcncd(void *startline);
  * \param n_threads Maximum number of threads
  * \return 0 on success, -1 otherwise
  */
-int	do_ncd(char *inputA, char *inputB, char *output, char *compressor, char mode, char csize, int n_threads)
+int do_ncd(char *inputA, char *inputB, char *output, char *compressor, char mode, char csize, int n_threads)
 {
 	unsigned long i, j, total_files, total_de, startline, group_size;
 	char *files[2], *fpath;
@@ -232,7 +232,6 @@ int	do_ncd(char *inputA, char *inputB, char *output, char *compressor, char mode
 	 * (or vector) lines to each thread and start them all */
 	ncd_total_files = total_files;
 	if (csize == 1) {
-		printf("AQUI: %ld\n\n", total_files);
 		/* Calculate only compressed sizes */
 		group_size = total_files / n_threads;
 		for (i = 0, startline = 0; 
@@ -396,8 +395,6 @@ void *thread_calcsize(void *startline)
 	ssize_t csize;
 	char turn;
 	ncd_file_t *fp;
-
-	printf("CHEGOU AQUI: %ld\n", ncd_total_files);
 
 	i    = sl;
 	turn = 0;
