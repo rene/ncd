@@ -1,8 +1,9 @@
+#include "config.h"
+#if HAVE_ZLIB
 #include <stdio.h>
 #include <zlib.h>
 #include "ncd.h"
 
-#if HAVE_LIBZ
 #define Z_FILE_CHUNK   16384
 #define Z_COMP_LEVEL 9
 

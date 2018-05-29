@@ -19,19 +19,19 @@
 
 ssize_t ppmd_getcompsize(ncd_file_t *fin);
 
-#if HAVE_LIBZ
+#if HAVE_ZLIB
 ssize_t zlib_getcompsize(ncd_file_t *file);
 #endif
-#if HAVE_LIBBZ2
+#if HAVE_BZLIB
 ssize_t bzlib_getcompsize(ncd_file_t *file);
 #endif
 
 /** Available compressors definitions */
 compressor_t comp_list[] = {
-#if HAVE_LIBZ	
+#if HAVE_ZLIB
 	{"zlib", zlib_getcompsize},
 #endif
-#if HAVE_LIBBZ2
+#if HAVE_BZLIB
 	{"bzlib", bzlib_getcompsize},
 #endif
 	{"ppmd", ppmd_getcompsize},

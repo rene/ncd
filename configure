@@ -717,6 +717,8 @@ ac_user_opts='
 enable_option_checking
 enable_silent_rules
 enable_dependency_tracking
+with_zlib
+with_bzlib
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1347,6 +1349,12 @@ Optional Features:
                           do not reject slow dependency extractors
   --disable-dependency-tracking
                           speeds up one-time build
+
+Optional Packages:
+  --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
+  --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
+  --without-zlib          Disable zlib support
+  --without-bzlib         Disable bzlib support
 
 Some influential environment variables:
   CC          C compiler command
@@ -3726,7 +3734,17 @@ fi
 
 # Checks for libraries.
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for deflate in -lz" >&5
+# Check whether --with-zlib was given.
+if test "${with_zlib+set}" = set; then :
+  withval=$with_zlib; with_zlib=no
+else
+  with_zlib=check
+fi
+
+
+
+if test "x$with_zlib" != "xno"; then :
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for deflate in -lz" >&5
 $as_echo_n "checking for deflate in -lz... " >&6; }
 if ${ac_cv_lib_z_deflate+:} false; then :
   $as_echo_n "(cached) " >&6
@@ -3763,20 +3781,32 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_z_deflate" >&5
 $as_echo "$ac_cv_lib_z_deflate" >&6; }
 if test "x$ac_cv_lib_z_deflate" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBZ 1
-_ACEOF
-
-  LIBS="-lz $LIBS"
-
+  have_zlib=yes
 else
   as_fn_error $? "ERROR: can't find zlib!" "$LINENO" 5
 fi
 
-ZLIB_LIBS='-lz'
+else
+  have_zlib=no
+fi
+
+if test "x$have_zlib" = "xyes"; then :
+  ZLIB_LIBS='-lz'
 
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for BZ2_bzCompress in -lbz2" >&5
+$as_echo "#define HAVE_ZLIB 1" >>confdefs.h
+
+fi
+
+
+# Check whether --with-bzlib was given.
+if test "${with_bzlib+set}" = set; then :
+  withval=$with_bzlib;
+fi
+
+
+if test "x$with_bzlib" != "xno"; then :
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for BZ2_bzCompress in -lbz2" >&5
 $as_echo_n "checking for BZ2_bzCompress in -lbz2... " >&6; }
 if ${ac_cv_lib_bz2_BZ2_bzCompress+:} false; then :
   $as_echo_n "(cached) " >&6
@@ -3813,18 +3843,22 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_bz2_BZ2_bzCompress" >&5
 $as_echo "$ac_cv_lib_bz2_BZ2_bzCompress" >&6; }
 if test "x$ac_cv_lib_bz2_BZ2_bzCompress" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBBZ2 1
-_ACEOF
-
-  LIBS="-lbz2 $LIBS"
-
+  have_bzlib=yes
 else
   as_fn_error $? "ERROR: can't find bzlib!" "$LINENO" 5
 fi
 
-ZLIB_LIBS='-lbz2'
+else
+  have_zlib=no
+fi
 
+if test "x$have_bzlib" = "xyes"; then :
+  BZLIB_LIBS='-lbz2'
+
+
+$as_echo "#define HAVE_BZLIB 1" >>confdefs.h
+
+fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing pthread_create" >&5
 $as_echo_n "checking for library containing pthread_create... " >&6; }

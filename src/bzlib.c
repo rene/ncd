@@ -1,8 +1,9 @@
+#include "config.h"
+#if HAVE_BZLIB
 #include <stdio.h>
 #include <bzlib.h>
 #include "ncd.h"
 
-#if HAVE_LIBBZ2
 #define BZ_FILE_CHUNK 102400
 
 /**

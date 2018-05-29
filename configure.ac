@@ -5,13 +5,29 @@ AM_INIT_AUTOMAKE([subdir-objects -Wall -Werror foreign])
 AC_PROG_CC
 
 # Checks for libraries.
-AC_CHECK_LIB([z],[deflate],,AC_MSG_ERROR([ERROR: can't find zlib!]))
-ZLIB_LIBS='-lz'
-AC_SUBST(ZLIB_LIBS)
+AC_ARG_WITH([zlib],
+    AS_HELP_STRING([--without-zlib], [Disable zlib support]),[with_zlib=no],[with_zlib=check])
 
-AC_CHECK_LIB([bz2],[BZ2_bzCompress],,AC_MSG_ERROR([ERROR: can't find bzlib!]))
-ZLIB_LIBS='-lbz2'
-AC_SUBST(BZLIB_LIBS)
+AS_IF([test "x$with_zlib" != "xno"],
+      [AC_CHECK_LIB([z],[deflate],[have_zlib=yes],AC_MSG_ERROR([ERROR: can't find zlib!]))],
+      [have_zlib=no])
+
+AS_IF([test "x$have_zlib" = "xyes"],
+      [ZLIB_LIBS='-lz'
+	   AC_SUBST(ZLIB_LIBS)
+	   AC_DEFINE([HAVE_ZLIB],[1],[Define to enable zlib compressor support])],)
+
+AC_ARG_WITH([bzlib],
+    AS_HELP_STRING([--without-bzlib], [Disable bzlib support]))
+
+AS_IF([test "x$with_bzlib" != "xno"],
+      [AC_CHECK_LIB([bz2],[BZ2_bzCompress],[have_bzlib=yes],AC_MSG_ERROR([ERROR: can't find bzlib!]))],
+      [have_zlib=no])
+
+AS_IF([test "x$have_bzlib" = "xyes"],
+      [BZLIB_LIBS='-lbz2'
+	   AC_SUBST(BZLIB_LIBS)]
+	   AC_DEFINE([HAVE_BZLIB],[1],[Define to enable bzlib compressor support]),)
 
 AC_SEARCH_LIBS(pthread_create,[pthread],,AC_MSG_ERROR([ERROR: can't find pthreds!]))
 
