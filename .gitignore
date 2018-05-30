@@ -1,0 +1,9 @@
+*.o
+*.deps
+*.log
+Makefile
+config.status
+src/config.h
+src/ncd
+src/ppmd/.dirstamp
+src/stamp-h1
