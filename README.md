@@ -15,6 +15,7 @@ such as:
 ## How to compile and run
 
 ```bash
+./autogen.sh
 ./configure
 make
 ```
